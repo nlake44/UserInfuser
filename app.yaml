@@ -1,0 +1,111 @@
+application: cloudcaptive-userinfuser
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+
+# Admin Paths
+- url: /test/.*
+  script: serverside/testing/test.py
+  login: admin
+
+# Analytics 
+- url: /fantasm/.*
+  script: fantasm/main.py
+  login: admin
+
+- url: /hello
+  script: serverside/main.py 
+  login: admin 
+
+- url: /runanalytics
+  script: serverside/main.py
+  login: admin
+
+- url: /stats.*
+  script: $PYTHON_LIB/google/appengine/ext/appstats/ui.py
+  login: admin
+  secure: always
+
+- url: /getanalytics
+  script: serverside/main.py
+  secure: always 
+
+# NonSecure static HTML/image/style content
+- url: /
+  script: serverside/main.py
+  secure: always 
+
+- url: /console/
+  static_dir: static/console
+
+- url: /html/
+  static_dir: static/html
+
+- url: /images/
+  static_dir: static/images
+
+- url: /css/
+  static_dir: static/css
+
+- url: /lib/
+  static_dir: static/lib
+
+- url: /js/
+  static_dir: static/js
+
+# Individual files
+- url: /favicon\.ico
+  static_files: static/images/favicon.ico
+  upload: static/images/favicon.ico
+  
+- url: /googlehostedservice\.html
+  static_files: static/googlehostedservice.html
+  upload: static/googlehostedservice.html
+
+- url: /robots\.txt
+  static_files: static/robots.txt
+  upload: static/robots.txt
+
+- url: /sitemap\.xml
+  static_files: static/sitemap.xml
+  upload: static/sitemap.xml
+
+- url: /BingSiteAuth.xml
+  static_files: static/BingSiteAuth.xml
+  upload: static/BingSiteAuth.xml
+
+# Upload badge, and download badge
+- url: /badge/.*
+  script: /serverside/main.py
+
+#Secure 
+- url: /(login|logout|account|admin|newslettersignup|signup)
+  script: /serverside/main.py
+  secure: always
+
+- url: /adminconsole.*
+  script: /serverside/console.py
+  secure: always
+
+- url: /api/.*
+  script: /serverside/api/api.py
+  secure: optional
+
+- url: /(logevents)
+  script: /serverside/logs.py
+  secure: optional
+
+- url: /(updateaccount)
+  script: /serverside/update_account.py
+  secure: optional
+
+# Not found 
+- url: /.*
+  #static_dir: static/html/404\.html
+  script: /serverside/not_found.py
+
+builtins:
+- datastore_admin: on
+- appstats: on

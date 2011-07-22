@@ -1,0 +1,10 @@
+* If you logout, and go to a previous page, the redirect to the signup page is relative, and not absolute.
+* Need error checking for uploading users
+* Need to have a drop down menu for selecting badges to award
+* APIs need to catch bad badge ids and other bad args
+* Need for better organization of the cutomizing of widgets
+* Show users lastest API errors
+* Change links to TEXT fields, because string properties are not long enough
+* More output for rank not calculated because of missing ref
+* Need to change default name of milestones (not availablebadges)
+

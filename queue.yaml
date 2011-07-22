@@ -1,0 +1,19 @@
+total_storage_limit: 1G
+
+queue:
+  
+- name: backup
+  rate: 50/s
+  bucket_size: 50
+
+- name: default
+  rate: 100/s
+  bucket_size: 100
+  
+- name: log
+  rate: 100/s
+  bucket_size: 100
+  
+- name: cleanup
+  rate: 100/s
+  bucket_size: 100

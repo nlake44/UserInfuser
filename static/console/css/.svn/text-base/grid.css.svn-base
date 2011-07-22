@@ -1,0 +1,403 @@
+/*
+	Variable Grid System.
+	Learn more ~ http://www.spry-soft.com/grids/
+	Based on 960 Grid System - http://960.gs/
+
+	Licensed under GPL and MIT.
+*/
+
+
+/* Containers
+----------------------------------------------------------------------------------------------------*/
+.container_8 {
+	margin-left: auto;
+	margin-right: auto;
+	width: 960px;
+}
+
+/* Grid >> Global
+----------------------------------------------------------------------------------------------------*/
+
+.grid_1,
+.grid_2,
+.grid_3,
+.grid_4,
+.grid_5,
+.grid_6,
+.grid_7,
+.grid_8 {
+	display:inline;
+	float: left;
+	position: relative;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+/* Grid >> Children (Alpha ~ First, Omega ~ Last)
+----------------------------------------------------------------------------------------------------*/
+
+.alpha {
+	margin-left: 0;
+}
+
+.omega {
+	margin-right: 0;
+}
+
+/* Grid >> 8 Columns
+----------------------------------------------------------------------------------------------------*/
+
+.container_8 .grid_1 {
+	width:100px;
+}
+
+.container_8 .grid_2 {
+	width:220px;
+}
+
+.container_8 .grid_3 {
+	width:340px;
+}
+
+.container_8 .grid_4 {
+	width:460px;
+}
+
+.container_8 .grid_5 {
+	width:580px;
+}
+
+.container_8 .grid_6 {
+	width:700px;
+}
+
+.container_8 .grid_7 {
+	width:820px;
+}
+
+.container_8 .grid_8 {
+	width:940px;
+}
+
+
+
+/* Prefix Extra Space >> 8 Columns
+----------------------------------------------------------------------------------------------------*/
+
+.container_8 .prefix_1 {
+	padding-left:120px;
+}
+
+.container_8 .prefix_2 {
+	padding-left:240px;
+}
+
+.container_8 .prefix_3 {
+	padding-left:360px;
+}
+
+.container_8 .prefix_4 {
+	padding-left:480px;
+}
+
+.container_8 .prefix_5 {
+	padding-left:600px;
+}
+
+.container_8 .prefix_6 {
+	padding-left:720px;
+}
+
+.container_8 .prefix_7 {
+	padding-left:840px;
+}
+
+
+
+/* Suffix Extra Space >> 8 Columns
+----------------------------------------------------------------------------------------------------*/
+
+.container_8 .suffix_1 {
+	padding-right:120px;
+}
+
+.container_8 .suffix_2 {
+	padding-right:240px;
+}
+
+.container_8 .suffix_3 {
+	padding-right:360px;
+}
+
+.container_8 .suffix_4 {
+	padding-right:480px;
+}
+
+.container_8 .suffix_5 {
+	padding-right:600px;
+}
+
+.container_8 .suffix_6 {
+	padding-right:720px;
+}
+
+.container_8 .suffix_7 {
+	padding-right:840px;
+}
+
+
+
+/* Push Space >> 8 Columns
+----------------------------------------------------------------------------------------------------*/
+
+.container_8 .push_1 {
+	left:120px;
+}
+
+.container_8 .push_2 {
+	left:240px;
+}
+
+.container_8 .push_3 {
+	left:360px;
+}
+
+.container_8 .push_4 {
+	left:480px;
+}
+
+.container_8 .push_5 {
+	left:600px;
+}
+
+.container_8 .push_6 {
+	left:720px;
+}
+
+.container_8 .push_7 {
+	left:840px;
+}
+
+
+
+/* Pull Space >> 8 Columns
+----------------------------------------------------------------------------------------------------*/
+
+.container_8 .pull_1 {
+	left:-120px;
+}
+
+.container_8 .pull_2 {
+	left:-240px;
+}
+
+.container_8 .pull_3 {
+	left:-360px;
+}
+
+.container_8 .pull_4 {
+	left:-480px;
+}
+
+.container_8 .pull_5 {
+	left:-600px;
+}
+
+.container_8 .pull_6 {
+	left:-720px;
+}
+
+.container_8 .pull_7 {
+	left:-840px;
+}
+
+/* Containers
+----------------------------------------------------------------------------------------------------*/
+.container_6 {
+	margin-left: auto;
+	margin-right: auto;
+	width: 780px;
+}
+
+/* Grid >> Global
+----------------------------------------------------------------------------------------------------*/
+
+.grid_1,
+.grid_2,
+.grid_3,
+.grid_4,
+.grid_5,
+.grid_6 {
+	display:inline;
+	float: left;
+	position: relative;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+/* Grid >> Children (Alpha ~ First, Omega ~ Last)
+----------------------------------------------------------------------------------------------------*/
+
+.alpha {
+	margin-left: 0;
+}
+
+.omega {
+	margin-right: 0;
+}
+
+/* Grid >> 6 Columns
+----------------------------------------------------------------------------------------------------*/
+
+.container_6 .grid_1 {
+	width:110px;
+}
+
+.container_6 .grid_2 {
+	width:240px;
+}
+
+.container_6 .grid_3 {
+	width:370px;
+}
+
+.container_6 .grid_4 {
+	width:500px;
+}
+
+.container_6 .grid_5 {
+	width:630px;
+}
+
+.container_6 .grid_6 {
+	width:760px;
+}
+
+
+
+/* Prefix Extra Space >> 6 Columns
+----------------------------------------------------------------------------------------------------*/
+
+.container_6 .prefix_1 {
+	padding-left:130px;
+}
+
+.container_6 .prefix_2 {
+	padding-left:260px;
+}
+
+.container_6 .prefix_3 {
+	padding-left:390px;
+}
+
+.container_6 .prefix_4 {
+	padding-left:520px;
+}
+
+.container_6 .prefix_5 {
+	padding-left:650px;
+}
+
+
+
+/* Suffix Extra Space >> 6 Columns
+----------------------------------------------------------------------------------------------------*/
+
+.container_6 .suffix_1 {
+	padding-right:130px;
+}
+
+.container_6 .suffix_2 {
+	padding-right:260px;
+}
+
+.container_6 .suffix_3 {
+	padding-right:390px;
+}
+
+.container_6 .suffix_4 {
+	padding-right:520px;
+}
+
+.container_6 .suffix_5 {
+	padding-right:650px;
+}
+
+
+
+/* Push Space >> 6 Columns
+----------------------------------------------------------------------------------------------------*/
+
+.container_6 .push_1 {
+	left:130px;
+}
+
+.container_6 .push_2 {
+	left:260px;
+}
+
+.container_6 .push_3 {
+	left:390px;
+}
+
+.container_6 .push_4 {
+	left:520px;
+}
+
+.container_6 .push_5 {
+	left:650px;
+}
+
+
+
+/* Pull Space >> 6 Columns
+----------------------------------------------------------------------------------------------------*/
+
+.container_6 .pull_1 {
+	left:-130px;
+}
+
+.container_6 .pull_2 {
+	left:-260px;
+}
+
+.container_6 .pull_3 {
+	left:-390px;
+}
+
+.container_6 .pull_4 {
+	left:-520px;
+}
+
+.container_6 .pull_5 {
+	left:-650px;
+}
+
+
+/* Clear Floated Elements
+----------------------------------------------------------------------------------------------------*/
+
+/* http://sonspring.com/journal/clearing-floats */
+
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+/* http://perishablepress.com/press/2009/12/06/new-clearfix-hack/ */
+
+/* new clearfix */
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+	}
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */

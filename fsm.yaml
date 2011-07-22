@@ -1,0 +1,126 @@
+root_url: /fantasm/
+
+state_machines:
+#################################################
+- name: CountAwardedBadges
+
+  states:
+
+  - name: CountAwardedBadgeInitState
+    initial: True
+    action: serverside.analytics.AllAccountsClass
+    continuation: True
+    final: True
+    transitions:
+    - event: peraccount
+      to: PerAccountState
+   
+  - name: PerAccountState
+    action: serverside.analytics.PerAccountClass
+    continuation: True
+    final: True
+    transitions:
+    - event: perbadge
+      to: PerBadgeState
+
+  - name: PerBadgeState
+    action: serverside.analytics.PerBadgeClass
+    continuation: True
+    final: True
+    transitions:
+    - event: count
+      to: CountAwardedBadgesState
+    
+  - name: CountAwardedBadgesState
+    action: serverside.analytics.CountAwardedBadgesClass
+    final: True
+##############################################
+#################################################
+- name: CountAwardedBadgePoints
+
+  states:
+
+  - name: CountAwardedBadgePointsInitState
+    initial: True
+    action: serverside.analytics.BadgePointsAllAccountsClass
+    continuation: True
+    final: True
+    transitions:
+    - event: peraccount
+      to: BadgePointsPerAccountState
+   
+  - name: BadgePointsPerAccountState
+    action: serverside.analytics.BadgePointsPerAccountClass
+    continuation: True
+    final: True
+    transitions:
+    - event: perbadge
+      to: PerBadgePointsState
+
+  - name: PerBadgePointsState
+    action: serverside.analytics.PerBadgePointsClass
+    continuation: True
+    final: True
+    transitions:
+    - event: count
+      to: CountAwardedBadgePointsState
+    
+  - name: CountAwardedBadgePointsState
+    action: serverside.analytics.CountAwardedBadgePointsClass
+    final: True
+#################################################
+#################################################
+- name: CountAPICalls
+
+  states:
+
+  - name: CountAPICallsInitState
+    initial: True
+    action: serverside.analytics.APICallsAllAccountsClass
+    continuation: True
+    final: True
+    transitions:
+    - event: apicallsperaccount
+      to: APICallsPerAccountState
+   
+  - name: APICallsPerAccountState
+    action: serverside.analytics.APICallsPerAccountClass
+    continuation: True
+    final: True
+    transitions:
+    - event: count 
+      to: CountAPICallsState
+
+  - name: CountAPICallsState
+    action: serverside.analytics.CountAPICallsClass
+    final: True
+    fan_in: 5
+##############################################
+
+#################################################
+- name: CountAwardedPoints
+
+  states:
+
+  - name: CountPointsInitState
+    initial: True
+    action: serverside.analytics.PointsAllAccountsClass
+    continuation: True
+    final: True
+    transitions:
+    - event: pointsperaccount
+      to: PointsPerAccountState
+   
+  - name: PointsPerAccountState
+    action: serverside.analytics.PointsPerAccountClass
+    continuation: True
+    final: True
+    transitions:
+    - event: count 
+      to: CountPointsState
+
+  - name: CountPointsState
+    action: serverside.analytics.CountPointsClass
+    final: True
+    fan_in: 5
+##############################################
