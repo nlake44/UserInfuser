@@ -26,3 +26,4 @@
   * Updated documentation
   * Fixed initial look for analytic charts that don't have data  
   * Ability to remove badges
+  * Fixed image centering for milestones widget

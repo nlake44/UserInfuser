@@ -58,6 +58,7 @@ type="text/javascript">
            $("#{{ badge.id }}-percentage").html("Locked");
         {% endif %}
       {% endif %}
+      $("#{{ badge.id }}-badge_pbImage").width({{imageSize}});
     {% endfor %}
   {% endif %}
   });

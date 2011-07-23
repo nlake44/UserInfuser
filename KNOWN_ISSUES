@@ -6,5 +6,3 @@
 * Show users lastest API errors
 * Change links to TEXT fields, because string properties are not long enough
 * More output for rank not calculated because of missing ref
-* Need to change default name of milestones (not availablebadges)
-

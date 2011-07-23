@@ -67,6 +67,7 @@ How keys are created for each type of entity:
 User: sha1(account_id + '-' + user_id)
 Badge: creatoremail + '-' badgename + '-' + badgetheme + '-' + permissions
 BadgeInstance: user_id + '-' + badge_key
+The dao interface should have a create key function for each
 """
 def debug(msg):
   if DISABLE_LOGGING:
