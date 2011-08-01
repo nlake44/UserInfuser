@@ -1,5 +1,6 @@
 * If you logout, and go to a previous page, the redirect to the signup page is relative, and not absolute.
 * Need error checking for uploading users
+* Need error checking for award user
 * Need to have a drop down menu for selecting badges to award
 * APIs need to catch bad badge ids and other bad args
 * Need for better organization of the cutomizing of widgets
