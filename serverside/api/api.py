@@ -273,14 +273,14 @@ class API_1_UpdateUser(webapp.RequestHandler):
     new_user_id = self.request.get('userid')
     # Anything that can possibly be rended should be cleaned 
     profile_link = self.request.get('profile_link')
-    if not profile_link.startswith('http://'):
+    if profile_link != "" and not profile_link.startswith('http://'):
       profile_link = "http://" + profile_link
 
     # We can't clean it because it will not render if embedded into a site
     # Be wary of doing any queries with this data
     #profile_link = clean.strip(profile_link)
     profile_img = self.request.get('profile_img') 
-    if not profile_img.startswith('http://'):
+    if profile_img != "" and  not profile_img.startswith('http://'):
       profile_img = "http://" + profile_img
 
     #profile_img = clean.strip(profile_img)
