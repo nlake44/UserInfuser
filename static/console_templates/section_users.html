@@ -1,4 +1,5 @@
 <section class="main-section grid_7">
+
 	<div class="main-content">
 		<header>
 			<ul class="action-buttons clearfix fr">
@@ -18,6 +19,10 @@
 					<div class="panes clearfix">
 						<section id="usersOrderedByNameSection">
 							<h3>Users ordered by name</h3>
+                                                        {% if has_error %}
+                                                          <div class="message error">{{ error }}</div>
+                                                        {% endif %}
+
 							<p>Click on a user to view information.</p>
 							<hr />
 							<table class="datatable">
@@ -84,14 +89,25 @@
                          <section id="Award User">
                                                    <h3>Award a user a badge or points</h3>
                                                    <hr/>
-                                                        <div class="message error">This functionality currently does not have error handling. Make sure you are using the correct user id and badge id!</div>
                                                         <div class="message info">Note: Use the API calls award_badge, award_badge_points, and award_points to award users within your application.</div>
                                                           
                                                           <form id="form" class="form grid_5" action="/adminconsole/users/award" method="post" enctype="multipart/form-data">
                                                                         <fieldset>
                                                                                 <legend>Award a badge</legend>
                                                                                 <label>User Id<em>*</em><small></small></label><input type="text" name="userid" required="required" />
-                                                                                <label>Badge Id<em>*</em><small></small></label><input type="text" name="badgeid" />
+                                                                                <label>Badge Id<em>*</em><small></small></label></br>
+<div>
+      <div>
+        <select data-placeholder="Choose a badge..."  style="width:270px;" tabindex="1" name="badgeid">
+          {% for badge in badges %}
+              <option value="{{badge.id}}">{{badge.id}}</option> 
+          {% endfor %}
+          {% if not badges %}
+              <option value="">Upload a badge first</option> 
+          {% endif %}
+        </select>        
+      </div>
+</div>
                                                                                 <input type="hidden" name="awardtype" value="awardbadge" />
                                                                                 <div class="action">
                                                                                         <button class="button button-gray" type="submit" ><span class="accept"></span>OK</button>

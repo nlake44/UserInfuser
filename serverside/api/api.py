@@ -116,7 +116,7 @@ def get_top_users(acc_ref):
 def calculate_rank(user_ref, acc_ref):
   rank = constants.NOT_RANKED
   if not user_ref or not acc_ref:
-    error("Unable to cal rank because of missing ref")
+    error("Unable to cal rank because of missing user or account ref")
     return rank
 
   if user_ref.rank:

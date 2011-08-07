@@ -8,6 +8,10 @@
 			<h2>User information for: {{editusername}}</h2>
 		</header> 
 		<section> 
+       {% if has_error %}
+         <div class="message error">{{ error }}</div>
+       {% endif %}
+
 			<a href="{{view_trophy_case}}" class="button button-gray help" rel="#overlay">View Trophy Case</a>
 			<br />
 			<br />

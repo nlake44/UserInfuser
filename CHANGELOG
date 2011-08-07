@@ -27,3 +27,6 @@
   * Fixed initial look for analytic charts that don't have data  
   * Ability to remove badges
   * Fixed image centering for milestones widget
+  * Error checking for awarding users
+  * Drop down menu for awarding badges
+  * Text field for user entity on anything that has to be over 500 characters

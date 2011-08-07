@@ -48,6 +48,19 @@ import random
 import simplejson
 json = simplejson
 
+def getErrorString(err):
+  if err == "BadImageType":
+    return "You may only have png, jpg, or gif image types"
+  elif err == "FileTooLarge":
+    return "Sorry, max image size allowed is " + str(constants.MAX_BADGE_SIZE) + " bytes"
+  elif err == "InvalidID":
+    return "Please check your values and try again"
+  elif err == "BadBadge":
+    return "Please check your badge id and try again"
+  elif err == "NoUserID":
+    return "A User ID was not provided, please try again"
+  return err
+
 class Console(webapp.RequestHandler):
   @account_login_required
   def get(self):
@@ -68,18 +81,22 @@ class ConsoleUsers(webapp.RequestHandler):
     """ Render users template """
     current_session = Session().get_current_session(self)
     email = current_session.get_email()
-    
+    error = self.request.get("error")
+    has_error = False
+    if error:
+      has_error = True 
+      error = getErrorString(error)
+    email = current_session.get_email()
+    account = current_session.get_account_entity()
+    badges = badges_dao.get_rendereable_badgeset(account)
     template_values = {'users_main': True,
-                       'account_name': email }
+                       'account_name': email,
+                       'badges':badges,
+                       'has_error': has_error,
+                       'error': error}
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_DASHBOARD, template_values))
 
 class ConsoleBadges(webapp.RequestHandler):
-  def getErrorString(self, err):
-    if err == "BadImageType":
-      return "You may only have png, jpg, or gif image types"
-    elif err == "FileTooLarge":
-      return "Sorry, max image size allowed is " + str(constants.MAX_BADGE_SIZE) + " bytes"
-    return err
   @account_login_required
   def get(self):
     current_session = Session().get_current_session(self)
@@ -89,7 +106,7 @@ class ConsoleBadges(webapp.RequestHandler):
     has_error = False
     if error:
       has_error = True 
-      error = self.getErrorString(error)
+      error = getErrorString(error)
     badgeset = badges_dao.get_rendereable_badgeset(account)
     upload_url = blobstore.create_upload_url('/badge/u')
     template_values = {'badges_main': True,
@@ -109,6 +126,11 @@ class ConsoleEditUser(webapp.RequestHandler):
     current_session = Session().get_current_session(self)
     email = current_session.get_email()
     edit_user = self.request.get("name")
+    error = self.request.get("error")
+    has_error = False
+    if error:
+      has_error = True 
+      error = getErrorString(error)
     
     """ Generate links to see each widget for user """
     userhash = hashlib.sha1(email + '---' + edit_user).hexdigest()
@@ -124,7 +146,9 @@ class ConsoleEditUser(webapp.RequestHandler):
                        'view_trophy_case':trophy_case_widget_url,
                        'view_points':points_widget_url,
                        'view_rank':rank_widget_url,
-                       'view_milestones':milestones_widget_url}
+                       'view_milestones':milestones_widget_url,
+                       'error':error,
+                       'has_error':has_error}
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_DASHBOARD, template_values))
 
 class ConsoleUsersFetch(webapp.RequestHandler):
@@ -485,7 +509,7 @@ class AddUser(webapp.RequestHandler):
     email = account_entity.email
     new_user_id = self.request.get("id")
     if new_user_id == constants.ANONYMOUS_USER:
-      self.redirect('/adminconsole/users')
+      self.redirect('/adminconsole/users?error=NoUserID')
       return 
     profile_name = self.request.get("name")
     profile_link = self.request.get("profile")
@@ -512,18 +536,29 @@ class AwardUser(webapp.RequestHandler):
 
     user_id = self.request.get('userid')
     if not user_id:
-      self.redirect('/adminconsole/users')
+      self.redirect('/adminconsole/users?error=NoUserID')
       return
     if user_id == constants.ANONYMOUS_USER:
-      self.redirect('/adminconsole/users')
+      self.redirect('/adminconsole/users?error=InvalidID')
       return 
-
+    if not users_dao.get_user(email, user_id):
+      self.redirect('/adminconsole/users?error=InvalidID')
+      return 
     award_type = self.request.get('awardtype')
     if award_type == 'awardbadge':
       badge_id = self.request.get("badgeid")
+      if not badge_id:
+        logging.error("Badge ID not provided %s"%email)
+        self.redirect('/adminconsole/users?error=BadBadge')
+      badge_key = badges_dao.get_key_from_badge_id(email, badge_id)
+      if not badges_dao.get_badge(badge_key):
+        logging.error("Badge ID does not exist for account %s"%email)
+        self.redirect('/adminconsole/users?error=BadBadge')
       if not ui.award_badge(user_id, badge_id):
+        self.redirect('/adminconsole/users?error=BadBadge')
         logging.error("Make sure the client code urls points to http://<app-id>.appspot.com if this is a custom deploy")
         logging.error("Account %s is unable to award badge %s to user %s"%(email, badge_id, user_id))
+        self.redirect('/adminconsole/users?error=BadBadge')
     elif award_type == 'awardpoints': 
       points = self.request.get("points")
       try:
@@ -532,9 +567,10 @@ class AwardUser(webapp.RequestHandler):
         points = 0
       if not ui.award_points(user_id, points):
         logging.error("Account %s is unable to award points %d to user %s"%(email, points, user_id))
+        self.redirect('/adminconsole/users?error=InvalidID')
     else:
       logging.error("Received %s for console user award from account %s"%(award_type, email))
-      self.redirect('/adminconsole/users')
+      self.redirect('/adminconsole/users?error=InvalidID')
       
     self.redirect('/adminconsole/users/edit?name=' + user_id)
 

@@ -57,7 +57,6 @@ def __url_async_post(worker_url, argsdic):
   for kk,vv in argsdic.items():
     if vv.__class__.__name__ in ['str', 'unicode']:
       argsdic[kk] = vv.encode('utf-8') 
-  logging.info("Worker " + str(worker_url))
   taskqueue.add(url=worker_url, params=argsdic)
   #urlfetch.make_fetch_call(rpc, url, payload=urllib.urlencode(argsdic), method=urlfetch.POST)
 
