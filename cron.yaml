@@ -4,9 +4,9 @@ cron:
   url: /fantasm/fsm/FantasmScrubber/?age=90&method=POST
   schedule: every day 9:00
 
-- description: Fetching App To Keep Latency Down
-  url: /hello
-  schedule: every 5 minutes
+#- description: Fetching App To Keep Latency Down
+#  url: /hello
+#  schedule: every 5 minutes
 
 - description: Analytics
   url: /runanalytics
