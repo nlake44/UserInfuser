@@ -44,15 +44,15 @@ Description:
 """
 class Accounts(db.Model):
   email = db.EmailProperty(required=True)
-  password = db.StringProperty(required=True);
+  password = db.StringProperty(required=True, indexed=False);
   isEnabled = db.StringProperty(required=True, choices=ACCOUNT_STATUS.RANGE_OF_VALUES)
-  creationDate = db.DateTimeProperty(auto_now_add=True)
-  modifiedDate = db.DateTimeProperty(auto_now=True)
+  creationDate = db.DateTimeProperty(auto_now_add=True, indexed=False)
+  modifiedDate = db.DateTimeProperty(auto_now=True, indexed=False)
   accountType = db.StringProperty(required=True, 
-                                  choices=set(ACCOUNT_TYPES)) 
+                                  choices=set(ACCOUNT_TYPES), indexed=False) 
   paymentType = db.StringProperty(required=True, 
-                                  choices=set(PAYMENT_TYPES))
-  cookieKey = db.StringProperty(required=True)
+                                  choices=set(PAYMENT_TYPES), indexed=False)
+  cookieKey = db.StringProperty(required=True, indexed=False)
   apiKey = db.StringProperty(required=True)
 
   trophyWidget = db.ReferenceProperty(required=True, reference_class=TrophyCase)
@@ -62,20 +62,20 @@ class Accounts(db.Model):
   milestoneWidget = db.ReferenceProperty(reference_class=Milestones)
   leaderWidget = db.ReferenceProperty(reference_class=Leaderboard)
 
-  lastPayment = db.StringProperty()
-  firstName = db.StringProperty()
-  lastName = db.StringProperty()
-  address = db.StringProperty()
-  city = db.StringProperty()
-  phoneNumber = db.StringProperty()
-  state = db.StringProperty()
-  country = db.StringProperty()
-  comments = db.TextProperty()
-  receiveMarketEmails = db.BooleanProperty()
-  receiveAnalysisEmails = db.BooleanProperty()
-  pointsTrackingPeriod = db.StringProperty(choices=set(["daily","weekly", "monthly"] ))
-  lastPointsReset = db.DateTimeProperty()
-  notifyOnPoints = db.BooleanProperty(default=True)
+  lastPayment = db.StringProperty(indexed=False)
+  firstName = db.StringProperty(indexed=False)
+  lastName = db.StringProperty(indexed=False)
+  address = db.StringProperty(indexed=False)
+  city = db.StringProperty(indexed=False)
+  phoneNumber = db.StringProperty(indexed=False)
+  state = db.StringProperty(indexed=False)
+  country = db.StringProperty(indexed=False)
+  comments = db.TextProperty(indexed=False)
+  receiveMarketEmails = db.BooleanProperty(indexed=False)
+  receiveAnalysisEmails = db.BooleanProperty(indexed=False)
+  pointsTrackingPeriod = db.StringProperty(choices=set(["daily","weekly", "monthly"] ), indexed=False)
+  lastPointsReset = db.DateTimeProperty(indexed=False)
+  notifyOnPoints = db.BooleanProperty(default=True, indexed=False)
   # TODO do not use iconfinder's CDN, serve it up locally
-  pointsImage = db.StringProperty(default="http://cdn4.iconfinder.com/data/icons/prettyoffice/128/add1-.png")
-  loginImage = db.StringProperty(default="http://cdn1.iconfinder.com/data/icons/Hosting_Icons/128/secure-server-px-png.png")
+  pointsImage = db.StringProperty(default="http://cdn4.iconfinder.com/data/icons/prettyoffice/128/add1-.png", indexed=False)
+  loginImage = db.StringProperty(default="http://cdn1.iconfinder.com/data/icons/Hosting_Icons/128/secure-server-px-png.png", indexed=False)

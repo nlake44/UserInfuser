@@ -20,21 +20,21 @@ from serverside import constants
 class APICountBatch(db.Model):
   date = db.DateTimeProperty()
   account_key = db.StringProperty()
-  counter = db.IntegerProperty(default=0)
+  counter = db.IntegerProperty(default=0, indexed=False)
 
 class PointBatch(db.Model):
   date = db.DateTimeProperty()
   account_key = db.StringProperty()
-  counter = db.IntegerProperty(default=0)
+  counter = db.IntegerProperty(default=0, indexed=False)
 
 class BadgePointsBatch(db.Model):
   date = db.DateTimeProperty()
   account_key = db.StringProperty()
   badgeid = db.StringProperty()
-  counter = db.IntegerProperty(default=0)
+  counter = db.IntegerProperty(default=0, indexed=False)
 
 class BadgeBatch(db.Model):
   date = db.DateTimeProperty()
   account_key = db.StringProperty()
   badgeid = db.StringProperty()
-  counter = db.IntegerProperty(default=0)
+  counter = db.IntegerProperty(default=0, indexed=False)

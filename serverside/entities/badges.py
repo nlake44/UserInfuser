@@ -47,11 +47,11 @@ Notes:This instance type is only for testing purposes.
 """
 class BadgeImage(db.Model): 
   image = db.BlobProperty(required=True)  
-  permissions = db.StringProperty(required=True, choices=set(PERMISSION))
+  permissions = db.StringProperty(required=True, choices=set(PERMISSION), indexed=False)
   creator = db.ReferenceProperty(reference_class=Accounts, required=True)
-  imgType = db.StringProperty(required=True, choices=set(['jpg','gif','png', 'gif']))
-  creationDate = db.DateTimeProperty(auto_now_add=True)
-  modifiedDate = db.DateTimeProperty(auto_now=True)
+  imgType = db.StringProperty(required=True, choices=set(['jpg','gif','png', 'gif']), indexed=False)
+  creationDate = db.DateTimeProperty(auto_now_add=True, indexed=False)
+  modifiedDate = db.DateTimeProperty(auto_now=True, indexed=False)
 
 """
 Class: Badges
@@ -71,25 +71,25 @@ Attributes:
 class Badges(db.Model):
   name = db.StringProperty(required=True)
   description = db.TextProperty(required=True)
-  altText = db.StringProperty(required=True)
-  setType = db.StringProperty(required=True, choices=set(TYPES))
+  altText = db.TextProperty(required=True)
+  setType = db.TextProperty(required=True, choices=set(TYPES))
   isEnabled = db.StringProperty(required=True, choices=set(BOOLEAN))
-  creationDate = db.DateTimeProperty(auto_now_add=True)
-  modifiedDate = db.DateTimeProperty(auto_now=True)
+  creationDate = db.DateTimeProperty(auto_now_add=True, indexed=False)
+  modifiedDate = db.DateTimeProperty(auto_now=True, indexed=False)
   creator = db.ReferenceProperty(reference_class=Accounts, required=True)
   tags = db.StringProperty()
   permissions = db.StringProperty(required=True, choices=set(PERMISSION))
-  storageType = db.StringProperty(required=True, choices=set(STYPE))
+  storageType = db.StringProperty(required=True, choices=set(STYPE), indexed=False)
   # This if you want to make the badge clickable, and route to a resource
   # or secret link, etc
-  resourceLink = db.LinkProperty()
-  downloadLink = db.LinkProperty()
+  resourceLink = db.LinkProperty(indexed=False)
+  downloadLink = db.LinkProperty(indexed=False)
   # a reference key to the object stored into the blobstore
   blobKey =  blobstore.BlobReferenceProperty()
-  imageKey = db.ReferenceProperty(reference_class=BadgeImage)
+  imageKey = db.ReferenceProperty(reference_class=BadgeImage, indexed=False)
   # Uploaded files in static images of badges
-  filePath = db.StringProperty()
-  theme = db.StringProperty()
+  filePath = db.StringProperty(indexed=False)
+  theme = db.StringProperty(indexed=False)
   
 """
 Class: BadgeInstance
@@ -102,14 +102,14 @@ class BadgeInstance(db.Model):
   userRef = db.ReferenceProperty(reference_class=Users, required=True)
   awarded = db.StringProperty(required=True, choices=set(BOOLEAN))
   permissions = db.StringProperty(required=True, choices=set(PERMISSION))
-  creationDate = db.DateTimeProperty(auto_now_add=True)
-  awardDateTime = db.DateTimeProperty()
-  awardDate = db.DateProperty()
-  modifiedDate = db.DateTimeProperty(auto_now=True)
-  instanceRegistrationDate = db.DateTimeProperty(auto_now=True)
-  pointsRequired = db.IntegerProperty(default=9999999999)
-  pointsEarned = db.IntegerProperty(default=0)
-  expirationDate = db.DateTimeProperty()
-  resource = db.LinkProperty()
-  reason = db.StringProperty()
-  downloadLink = db.LinkProperty()
+  creationDate = db.DateTimeProperty(auto_now_add=True, indexed=False)
+  awardDateTime = db.DateTimeProperty(indexed=False)
+  awardDate = db.DateProperty(indexed=False)
+  modifiedDate = db.DateTimeProperty(auto_now=True, indexed=False)
+  instanceRegistrationDate = db.DateTimeProperty(auto_now=True, indexed=False)
+  pointsRequired = db.IntegerProperty(default=9999999999, indexed=False)
+  pointsEarned = db.IntegerProperty(default=0, indexed=False)
+  expirationDate = db.DateTimeProperty(indexed=False)
+  resource = db.LinkProperty(indexed=False)
+  reason = db.StringProperty(indexed=False)
+  downloadLink = db.LinkProperty(indexed=False)
