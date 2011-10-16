@@ -28,7 +28,7 @@ class Users(db.Model):
   creationDate = db.DateTimeProperty(auto_now_add=True, indexed=False)
   modifiedDate = db.DateTimeProperty(auto_now=True, indexed=False)
   accountRef = db.ReferenceProperty(reference_class=Accounts, required=True)
-  points = db.IntegerProperty(default=0, indexed=False)
+  points = db.IntegerProperty(default=0)
   rank = db.IntegerProperty(default=constants.NOT_RANKED)
   last_time_ranked = db.DateTimeProperty(indexed=False)
   profileName = db.StringProperty(default="Anonymous", indexed=False)

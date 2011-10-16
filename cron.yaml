@@ -1,7 +1,7 @@
 cron:
 
 - description: Fantasm Scrubber
-  url: /fantasm/fsm/FantasmScrubber/?age=90&method=POST
+  url: /fantasm/fsm/FantasmScrubber/?age=10&method=POST
   schedule: every day 9:00
 
 #- description: Fetching App To Keep Latency Down

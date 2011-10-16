@@ -47,7 +47,7 @@ Notes:This instance type is only for testing purposes.
 """
 class BadgeImage(db.Model): 
   image = db.BlobProperty(required=True)  
-  permissions = db.StringProperty(required=True, choices=set(PERMISSION), indexed=False)
+  permissions = db.StringProperty(required=True, choices=set(PERMISSION))
   creator = db.ReferenceProperty(reference_class=Accounts, required=True)
   imgType = db.StringProperty(required=True, choices=set(['jpg','gif','png', 'gif']), indexed=False)
   creationDate = db.DateTimeProperty(auto_now_add=True, indexed=False)
@@ -86,10 +86,10 @@ class Badges(db.Model):
   downloadLink = db.LinkProperty(indexed=False)
   # a reference key to the object stored into the blobstore
   blobKey =  blobstore.BlobReferenceProperty()
-  imageKey = db.ReferenceProperty(reference_class=BadgeImage, indexed=False)
+  imageKey = db.ReferenceProperty(reference_class=BadgeImage)
   # Uploaded files in static images of badges
   filePath = db.StringProperty(indexed=False)
-  theme = db.StringProperty(indexed=False)
+  theme = db.StringProperty()
   
 """
 Class: BadgeInstance

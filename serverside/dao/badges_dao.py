@@ -96,6 +96,7 @@ def create_badge_type(badge_key,
     storage_type = "blob"
     blob_key = blob_info.key()  
     download_link = images.get_serving_url(str(blob_key))
+    logging.info("Badge serving url:" + str(download_link))
   else:
     logging.error("Create badge type error: No image to save for badge type") 
     raise

@@ -101,8 +101,8 @@ class Leaderboard(db.Model):
   borderThickness = db.IntegerProperty( default=1, indexed=False)
   borderColor = db.StringProperty( default="#4488FF", indexed=False)
   borderStyle = db.StringProperty( default="solid", indexed=False)
-  height = db.IntegerProperty( default=1000, indexed=False, indexed=False)
-  width = db.IntegerProperty( default=500, indexed=False, indexed=False)
+  height = db.IntegerProperty( default=1000, indexed=False)
+  width = db.IntegerProperty( default=500, indexed=False)
   hasRoundedCorners = db.BooleanProperty(default=False, indexed=False)
   imageSize = db.IntegerProperty(default=constants.IMAGE_PARAMS.LEADER_SIZE, indexed=False)
 
