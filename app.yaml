@@ -84,6 +84,10 @@ handlers:
 - url: /(login|logout|account|admin|newslettersignup|signup)
   script: /serverside/main.py
   secure: always
+  
+- url: /accinfo.*
+  script: /serverside/accinfo.py
+  secure: always
 
 - url: /adminconsole.*
   script: /serverside/console.py
