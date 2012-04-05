@@ -7,6 +7,7 @@ public enum WidgetType {
 	NOTIFIER("notifier"),
 	POINTS("points"),
 	RANK("rank"),
+	LEADERBOARD("leaderboard"),
 	AVAILABLE_BADGES("availablebadges");
 	
 	private final String f_name;
