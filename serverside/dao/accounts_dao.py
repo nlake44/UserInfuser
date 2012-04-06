@@ -116,7 +116,13 @@ def authenticate_web_account(account_id, password):
     return entity
   else:
     return None
-  
+
+def authenticate_web_account_hashed(account_id, hashedpassword):
+  entity = memcache_db.get_entity(account_id, "Accounts")
+  if entity != None and entity.password == hashedpassword and entity.isEnabled == ACCOUNT_STATUS.ENABLED:
+    return entity
+  else:
+    return None   
   
 def change_account_password(email, new_password):
   """ Change value in data store, also do hashing """
@@ -176,6 +182,14 @@ def delete_account(acc_key):
 
 def save(acc_ref):
   memcache_db.save_entity(acc_ref, acc_ref.key().name())
+
+def get_all_accounts():
+  accounts = []
+  aset = Accounts.all()
+  for a in aset:
+    accounts.append(get(a.email))
+  return accounts
+  
 
 def get(acc_key):
   return memcache_db.get_entity(acc_key, "Accounts")
