@@ -130,7 +130,7 @@ class AccountUsage(webapp.RequestHandler):
         self.error(400)
         return
       accounts = []
-      accounts.append(object)
+      accounts.append(entity)
     
     alldata = {'usage':[]}
     ''' retrieve all usage information summary (just API calls) '''
@@ -139,16 +139,15 @@ class AccountUsage(webapp.RequestHandler):
       values = {"success": "true", "email" : acc.email}
       res = q.fetch(1000) 
       values['total'] = q.count() or 1
-      values['entry'] = []
+      monthsdict = {}
       for ii in res:
-        ent = {'date':ii.date.strftime("%Y-%m-%d"),
-               'count':str(ii.counter)}
-        values['entry'].append(ent)
-      else:
-        ent = {'date':datetime.datetime.now().strftime("%Y-%m-%d"),
-               'count':"0"}
-        values['entry'].append(ent)
-      
+        monthyear = ii.date.strftime('%Y-%m')
+        curr=monthsdict.get(monthyear)
+        if not curr:
+          curr = 0
+        curr += int(ii.counter)
+        monthsdict[monthyear] = curr
+      values['months'] = monthsdict
       alldata['usage'].append(values)
     
     self.response.out.write(simplejson.dumps(alldata))
