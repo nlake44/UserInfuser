@@ -167,7 +167,7 @@ def authorize_api(account_id, api_key):
   if not acc:
     logging.error("Permission error with null  account")
     return None
-  if acc.apiKey != api_key or not acc.isEnabled:
+  if acc.apiKey != api_key or acc.isEnabled != constants.ACCOUNT_STATUS.ENABLED:
     logging.error("Permission error with %s account with %s api key versus %s"\
                   %(account_id, api_key, acc.apiKey))
     return None
