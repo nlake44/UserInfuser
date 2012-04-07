@@ -361,7 +361,7 @@ class API_1_UpdateUser(webapp.RequestHandler):
       logdiction['details'] = db_error()
       logs.create(logdiction)
       self.response.out.write(db_error())
-      error("Error getting user with key %s"%key)
+      error("Error getting user with key %s"%user_key)
       return  
 
     logs.create(logdiction)
@@ -1321,7 +1321,7 @@ class API_1_CreateBadge(webapp.RequestHandler):
 
     imgbuf = result.content
     if  len(imgbuf) == 0:
-      error("One of the downloads did not work! url:%s"%newbadge)
+      error("One of the downloads did not work! url:%s"%imagelink)
       self.response.out.write(bad_args())
       return
     def get_file_ext(filename):
