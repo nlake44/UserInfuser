@@ -256,7 +256,8 @@ class API_1_GetUserData(webapp.RequestHandler):
         # add badge detail
         try:
           badgeobj = b.badgeRef
-          badge_detail.append({'name': badgeobj.name,
+          badge_detail.append({'id':bid,
+                               'name': badgeobj.name,
                                'description': badgeobj.description,
                                'theme': badgeobj.theme,
                                'awarded': str(b.awardDateTime),
