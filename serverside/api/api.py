@@ -245,12 +245,26 @@ class API_1_GetUserData(webapp.RequestHandler):
 
     badges = badges_dao.get_user_badges(user_ref)
     badge_keys = []
+    badge_detail = []
 
     # get the badge image link
     for b in badges:
       if b.awarded == "yes":
         bid = badges_dao.get_badge_id_from_instance_key(b.key().name())
         badge_keys.append(bid)
+        
+        # add badge detail
+        try:
+          badgeobj = b.badgeRef
+          badge_detail.append({'name': badgeobj.name,
+                               'description': badgeobj.description,
+                               'theme': badgeobj.theme,
+                               'awarded': str(b.awardDateTime),
+                               'downloadlink' : b.downloadLink})
+        except:
+          logging.error('Failed to add badge detail. Badge id: ' + bid)
+        
+        
     ret = {"status":"success",
            "user_id":user_ref.userid,
            "is_enabled":user_ref.isEnabled,
@@ -259,7 +273,8 @@ class API_1_GetUserData(webapp.RequestHandler):
            "profile_name": user_ref.profileName,
            "profile_link": user_ref.profileLink,
            "profile_img": user_ref.profileImg,
-           "badges": badge_keys}
+           "badges": badge_keys,
+           "badges_detail":badge_detail}
     logs.create(logdiction)
     self.response.out.write(json.dumps(ret)) 
     timing(start) 
@@ -492,6 +507,7 @@ class API_1_AwardBadgePoints(webapp.RequestHandler):
 
       if points_thus_far >= points_needed:
         reg_args["awarded"] = "yes"
+        isawarded = "yes"
       try:
         ret = badges_dao.update_badge_instance(badge_instance_key, 
                                 reg_args, incr_args)
