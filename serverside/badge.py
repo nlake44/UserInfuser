@@ -13,12 +13,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from django.utils import simplejson
 from serverside.dao import badges_dao
 from entities.accounts import Accounts
 from entities.badges import *
 from entities.users import *
-from google.appengine.ext import db, webapp
+from google.appengine.ext import db
+import webapp2
 from google.appengine.ext.webapp import template
 from serverside import constants
 from serverside.constants import TEMPLATE_PATHS
@@ -33,7 +33,7 @@ import logging
 import os
 import wsgiref.handlers
 import string
-json = simplejson
+import json
 
 def delete_blob(blob_info):
   blob_key = blob_info.key()
@@ -123,7 +123,7 @@ class UploadBadge(blobstore_handlers.BlobstoreUploadHandler):
   def get(self):
     self.redirect('/adminconsole/badges')
 
-class DownloadBadge(webapp.RequestHandler):
+class DownloadBadge(webapp2.RequestHandler):
   def get(self):
     badge_id = self.request.get("bk")
     if not badge_id:
@@ -137,7 +137,7 @@ class DownloadBadge(webapp.RequestHandler):
     self.response.headers['Content-Type'] = "image/" + str(badge.imgType)
     self.response.out.write(badge.image)
 
-class SeeTheme(webapp.RequestHandler):
+class SeeTheme(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     clean = XssCleaner()

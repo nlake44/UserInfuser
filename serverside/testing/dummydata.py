@@ -18,14 +18,14 @@ Created on Feb 24, 2011
 
 @author: shan
 '''
-from google.appengine.ext import webapp
+from google.appengine.ext import webapp2
 
 from serverside.dao import accounts_dao
 from serverside.dao import users_dao
 from serverside.entities.counter import *
 import random
 
-class CreateDummyAccountsAndUsers(webapp.RequestHandler):
+class CreateDummyAccountsAndUsers(webapp2.RequestHandler):
   def get(self):
     """
     Generate several accounts and users to test out stuff with
@@ -48,7 +48,7 @@ class CreateDummyAccountsAndUsers(webapp.RequestHandler):
         
     self.response.out.write("Done. :-)")
 
-class CreateDummyBatchData(webapp.RequestHandler):
+class CreateDummyBatchData(webapp2.RequestHandler):
   def get(self):      
     # yesterday 
     import datetime

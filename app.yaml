@@ -1,26 +1,27 @@
 application: cloudcaptive-userinfuser
 version: 1
-runtime: python
+runtime: python27
 api_version: 1
+threadsafe: false 
 
 handlers:
 
 # Admin Paths
 - url: /test/.*
-  script: serverside/testing/test.py
+  script: serverside.testing.test.app
   login: admin
 
 # Analytics 
 - url: /fantasm/.*
-  script: fantasm/main.py
+  script: fantasm.main.APP
   login: admin
 
 - url: /hello
-  script: serverside/main.py 
+  script: serverside.main.app
   login: admin 
 
 - url: /runanalytics
-  script: serverside/main.py
+  script: serverside.main.app
   login: admin
 
 - url: /stats.*
@@ -29,12 +30,12 @@ handlers:
   secure: always
 
 - url: /getanalytics
-  script: serverside/main.py
+  script: serverside.main.app
   secure: always 
 
 # NonSecure static HTML/image/style content
 - url: /
-  script: serverside/main.py
+  script: serverside.main.app
   secure: always 
 
 - url: /console/
@@ -78,38 +79,38 @@ handlers:
 
 # Upload badge, and download badge
 - url: /badge/.*
-  script: /serverside/main.py
+  script: serverside.main.app
 
 #Secure 
 - url: /(login|logout|account|admin|newslettersignup|signup)
-  script: /serverside/main.py
+  script: serverside.main.app
   secure: always
   
 - url: /accinfo.*
-  script: /serverside/accinfo.py
+  script: serverside.accinfo.app
   secure: always
 
 - url: /adminconsole.*
-  script: /serverside/console.py
+  script: serverside.console.app
   secure: always
 
 - url: /api/.*
-  script: /serverside/api/api.py
+  script: serverside.api.api.app
   secure: optional
 
 - url: /(logevents)
-  script: /serverside/logs.py
+  script: serverside.logs.app
   secure: optional
 
 - url: /(updateaccount)
-  script: /serverside/update_account.py
+  script: serverside.update_account.app
   secure: optional
 
 # Not found 
 - url: /.*
   #static_dir: static/html/404\.html
-  script: /serverside/not_found.py
+  script: serverside.not_found.app
 
 builtins:
-- datastore_admin: on
+#- datastore_admin: on
 - appstats: on

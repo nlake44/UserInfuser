@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from django.utils import simplejson
 from serverside.dao import accounts_dao
 from serverside.dao import badges_dao
 from entities.accounts import Accounts
@@ -21,7 +20,8 @@ from entities.badges import *
 from entities.users import *
 from entities.logs import *
 from entities.counter import *
-from google.appengine.ext import db, webapp
+from google.appengine.ext import db
+import webapp2
 from serverside import constants
 from serverside.session import Session
 from tools.utils import account_login_required
@@ -34,7 +34,7 @@ import os
 import wsgiref.handlers
 import string
 import datetime
-json = simplejson
+import json
 
 def stripMilSecs(d):
   return datetime.datetime(d.year, d.month, d.day, d.hour, d.minute, d.second)
@@ -42,7 +42,7 @@ def stripMilSecs(d):
 def stripHours(d):
   return datetime.datetime(d.year, d.month, d.day)
 
-class RunAnalytics(webapp.RequestHandler):
+class RunAnalytics(webapp2.RequestHandler):
   def get(self):
     now = datetime.datetime.now()
     a_day_ago = now - datetime.timedelta(days=1)
@@ -57,7 +57,7 @@ class RunAnalytics(webapp.RequestHandler):
 
 VALID_ANALYTICS = ["badges", "badgepoints", "points", "apicalls"]
 
-class GetAnalytics(webapp.RequestHandler):
+class GetAnalytics(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     current_session = Session().get_current_session(self)

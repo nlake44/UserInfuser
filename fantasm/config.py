@@ -20,7 +20,7 @@ Copyright 2010 VendAsta Technologies Inc.
 import os
 import yaml
 import logging
-import simplejson
+import json
 import datetime
 from fantasm import exceptions, constants, utils
 
@@ -178,12 +178,12 @@ def _resolveClass(className, namespace):
     
     # some shortcuts for context_types
     shortTypes = {
-        'dict': simplejson.loads,
+        'dict': json.loads,
         'int': int,
         'float': float,
         'bool': utils.boolConverter, 
         'long': long,
-        'json': simplejson.loads,
+        'json': json.loads,
         'datetime': lambda x: datetime.datetime.utcfromtimestamp(int(x)),
     }
     if className in shortTypes:

@@ -18,8 +18,8 @@ import logging
 import os
 import wsgiref.handlers
 import urllib
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
+import webapp2
+#from google.appengine.ext.webapp2.util import run_wsgi_app
 from google.appengine.api import urlfetch
 from serverside import constants
 from serverside import environment
@@ -27,7 +27,7 @@ from serverside.dao import logs_dao
 from serverside.dao import passphrase_dao 
 from google.appengine.api import taskqueue
 
-class LogEvent(webapp.RequestHandler):
+class LogEvent(webapp2.RequestHandler):
   def post(self):
     logsecret = self.request.get('key') 
     official_log_secret = passphrase_dao.get_log_secret()    
@@ -45,7 +45,7 @@ class LogEvent(webapp.RequestHandler):
     logs_dao.save_log(diction)
     return 
     #logs_dao.save_log(newlog)
-application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
   (constants.LOGGING.PATH, LogEvent)
 ], debug=constants.DEBUG)
 
@@ -71,8 +71,10 @@ def create(diction):
   assert ('event' in diction), "Logs must always have an event type"
   __url_async_post(constants.LOGGING.PATH, diction)
 
+"""
 def main():
   run_wsgi_app(application)
 
 if __name__ == '__main__':
   main()
+"""

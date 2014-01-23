@@ -15,12 +15,11 @@
 #
 import wsgiref.handlers
 import cgi
-from django.utils import simplejson
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext import db
-json = simplejson
+import json
 
-class LogIn(webapp.RequestHandler):
+class LogIn(webapp2.RequestHandler):
   def get(self):
     ret = {"success":"true"}
     ret = json.dumps(ret)

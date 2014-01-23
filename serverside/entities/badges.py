@@ -27,9 +27,9 @@ from users import Users
 
 from google.appengine.ext import db
 from google.appengine.ext.blobstore import blobstore
-from django.utils import simplejson  
+#from django.utils import simplejson  
 
-json = simplejson
+import json
 BOOLEAN = ["yes", "no"]
 TYPES = ["free", "basic", "premium"]
 STYPE = ["blob", "db"]

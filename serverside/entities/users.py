@@ -17,11 +17,11 @@ import logging
 import hashlib
 import datetime
 from google.appengine.ext import db
-from django.utils import simplejson
+#from django.utils import simplejson
 from serverside.entities.accounts import Accounts
 from serverside import constants
-json = simplejson
-
+#json = simplejson
+import json
 class Users(db.Model):
   userid = db.StringProperty(required=True)
   isEnabled = db.StringProperty(required=True, choices=set(["yes","no"]))

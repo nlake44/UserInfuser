@@ -18,15 +18,16 @@
 
 import wsgiref.handlers
 import cgi
-from django.utils import simplejson
-from google.appengine.ext import webapp
+#from django.utils import simplejson
+#import simplesjon
+import webapp2
 from google.appengine.ext import db
 from entities.users import *
 from tools.xss import XssCleaner
+import json
+#json = simplejson
 
-json = simplejson
-
-class AccountInfo(webapp.RequestHandler):
+class AccountInfo(webapp2.RequestHandler):
   def get(self):
     resp = {"success":"false","error":"User not logged in"}
     resp_json = json.dumps(resp)

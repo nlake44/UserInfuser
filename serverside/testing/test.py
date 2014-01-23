@@ -17,7 +17,7 @@
 """
 
 from google.appengine.api import mail, memcache
-from google.appengine.ext import db, webapp
+from google.appengine.ext import db, webapp2
 from google.appengine.ext.db import *
 from serverside import constants
 from serverside.entities import memcache_db
@@ -38,7 +38,7 @@ import os
 import time
 import wsgiref.handlers
 import random
-class TestDB(webapp.RequestHandler):
+class TestDB(webapp2.RequestHandler):
   def get(self):
    self.response.out.write("Test 1:" +self.test1() +"<br>")
    self.response.out.write("Test 2:" + self.test2() +"<br>")
@@ -355,7 +355,7 @@ class TestDB(webapp.RequestHandler):
        
     return "Success"
 
-class TestPendingCreates(webapp.RequestHandler):
+class TestPendingCreates(webapp2.RequestHandler):
   def get(self):
     """ Add to the db, get, and delete """
     
@@ -390,7 +390,7 @@ class TestPendingCreates(webapp.RequestHandler):
         self.response.out.write("Something found... not good.")
     
  
-class TestEncryption(webapp.RequestHandler):
+class TestEncryption(webapp2.RequestHandler):
   """Test encyption methods """
   def get(self):
     from serverside.tools import encryption
@@ -403,7 +403,7 @@ class TestEncryption(webapp.RequestHandler):
     self.response.out.write("decrypted: " + mystr_dec + "<br/>")
 
     
-class TestOSEnvironment(webapp.RequestHandler):
+class TestOSEnvironment(webapp2.RequestHandler):
   """Test method to see how environments are defined"""
   
   def get(self):
@@ -416,7 +416,7 @@ class TestOSEnvironment(webapp.RequestHandler):
   
   def post(self):
     pass   
-class TestCreateSession(webapp.RequestHandler):
+class TestCreateSession(webapp2.RequestHandler):
   def get(self):
     self.response.out.write("Creating session and setting cookie")
     
@@ -428,7 +428,7 @@ class TestCreateSession(webapp.RequestHandler):
     else:
       self.response.out.write("<br/>Session was created")
     
-class TestViewLoggedIn(webapp.RequestHandler):
+class TestViewLoggedIn(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     self.response.out.write("<br/>If you reached here you are logged in!")
@@ -441,7 +441,7 @@ class TestViewLoggedIn(webapp.RequestHandler):
       email = sess.get_email()
       self.response.out.write("<br/>" + email)
 
-class TestTerminateSession(webapp.RequestHandler):
+class TestTerminateSession(webapp2.RequestHandler):
   def get(self):
     self.response.out.write("terminating the follow session:")
     sess = Session().get_current_session(self)
@@ -453,7 +453,7 @@ class TestTerminateSession(webapp.RequestHandler):
       self.response.out.write("<br/>" + email)
       sess.terminate()
 
-class TestViewLoggedOut(webapp.RequestHandler):
+class TestViewLoggedOut(webapp2.RequestHandler):
   def get(self):
     self.response.out.write("You should be able to see this page, logged in or not...")
     sess = Session().get_current_session(self)
@@ -464,7 +464,7 @@ class TestViewLoggedOut(webapp.RequestHandler):
       email = sess.get_email()
       self.response.out.write("<br/>" + email)
 
-class TestLogs(webapp.RequestHandler):
+class TestLogs(webapp2.RequestHandler):
   def get(self):
     log1 = {"account":"test@test.test",
             'event':'getuserdata',
@@ -486,7 +486,7 @@ class TestLogs(webapp.RequestHandler):
     log1["details"] = u"A BUNCH OF accent e's \xe9\xe9\xe9"
     logs.create(log1)
 
-class TestLogsCheck(webapp.RequestHandler):
+class TestLogsCheck(webapp2.RequestHandler):
   def get(self):
     q = Logs.all()
     q.filter("account = ", "test@test.test") 
@@ -498,19 +498,19 @@ class TestLogsCheck(webapp.RequestHandler):
       self.response.out.write("<br/>")
     self.response.out.write("Number fetched " + str(count))
 
-class TestAccount(webapp.RequestHandler):
+class TestAccount(webapp2.RequestHandler):
   def get(self):
     pass
 
-class TestBadges(webapp.RequestHandler):
+class TestBadges(webapp2.RequestHandler):
   def get(self):
     pass
 
-class TestUsers(webapp.RequestHandler):
+class TestUsers(webapp2.RequestHandler):
   def get(self):
     pass
 
-class CreateDummyAPIAnalytics(webapp.RequestHandler):
+class CreateDummyAPIAnalytics(webapp2.RequestHandler):
   def fill_with_api_logs(self, acc):
     today = datetime.datetime.now() 
     rand = random.randint(1, 100)
@@ -536,7 +536,7 @@ class CreateDummyAPIAnalytics(webapp.RequestHandler):
       self.response.out.write("Did not create any logs, create a test account first")
       
 
-class CreateDummyBadgePointsAnalytics(webapp.RequestHandler):
+class CreateDummyBadgePointsAnalytics(webapp2.RequestHandler):
   def fill_with_api_logs(self, acc):
     today = datetime.datetime.now() 
     rand = random.randint(1, 100)
@@ -572,7 +572,7 @@ class CreateDummyBadgePointsAnalytics(webapp.RequestHandler):
     else:
       self.response.out.write("Did not create any logs, create a test account first")
 
-class CreateDummyBadgeAnalytics(webapp.RequestHandler):
+class CreateDummyBadgeAnalytics(webapp2.RequestHandler):
   def fill_with_api_logs(self, acc):
     today = datetime.datetime.now() 
     rand = random.randint(1, 100)
@@ -609,7 +609,7 @@ class CreateDummyBadgeAnalytics(webapp.RequestHandler):
       self.response.out.write("Did not create any logs, create a test account first")
 
 
-application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
   ('/test/db', TestDB),
   ('/test/logscreate', TestLogs),
   ('/test/logscheck', TestLogsCheck),
@@ -630,10 +630,11 @@ application = webapp.WSGIApplication([
   ('/test/pendingcreates', TestPendingCreates)
 ], debug=True)
 
-
+"""
 def main():
   wsgiref.handlers.CGIHandler().run(application)
 
 
 if __name__ == '__main__':
   main()
+"""

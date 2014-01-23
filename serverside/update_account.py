@@ -18,8 +18,9 @@ import logging
 import os
 import wsgiref.handlers
 import urllib
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
+import webapp2
+#from google.appengine.ext import webapp2
+#from google.appengine.ext.webapp2.util import run_wsgi_app
 from google.appengine.api import urlfetch
 from serverside import constants
 from serverside import environment
@@ -63,7 +64,7 @@ def groom_account(email):
     logging.error("Unable to get/create milestone wildget for" + str(email))
     return 
 
-class UpdateAccount(webapp.RequestHandler):
+class UpdateAccount(webapp2.RequestHandler):
   def post(self):
     email = self.request.get('email') 
     updatesecret = self.request.get('key') 
@@ -73,7 +74,7 @@ class UpdateAccount(webapp.RequestHandler):
       return
     groom_account(email)
 
-application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
   (constants.UPDATE.PATH, UpdateAccount)
 ], debug=constants.DEBUG)
 
@@ -96,8 +97,10 @@ def update_account(email):
   diction['email'] = email
   __url_async_post(constants.UPDATE.PATH, diction)
 
+"""
 def main():
   run_wsgi_app(application)
 
 if __name__ == '__main__':
   main()
+"""

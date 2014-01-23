@@ -14,8 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 from google.appengine.api import users
-from google.appengine.ext import webapp, db
-from google.appengine.ext.webapp.util import run_wsgi_app
+from google.appengine.ext import db
+from google.appengine.ext.webapp2.util import run_wsgi_app
 from serverside import constants
 from serverside.dao import accounts_dao
 from serverside.entities.counter import APICountBatch
@@ -24,8 +24,9 @@ import datetime
 import httplib
 import logging
 import os
-import simplejson
+import json 
 import urllib
+import webapp2
 
 class AppsAuthToken(db.Model):
   value = db.StringProperty()
@@ -79,7 +80,7 @@ def x_app_auth_required(method):
       self.response.out.write('Unable to authenticate!')
   return auth
 
-class SendXAppToken(webapp.RequestHandler):
+class SendXAppToken(webapp2.RequestHandler):
   def get(self):
     if users.is_current_user_admin():
       location = self.request.get('location')
@@ -96,7 +97,7 @@ class SendXAppToken(webapp.RequestHandler):
       
       conn.close()
   
-class Authenticate(webapp.RequestHandler):
+class Authenticate(webapp2.RequestHandler):
   """
   Authenticates user and password combo
   """
@@ -111,7 +112,7 @@ class Authenticate(webapp.RequestHandler):
     if not entity:
       self.error(400)
 
-class AccountUsage(webapp.RequestHandler):
+class AccountUsage(webapp2.RequestHandler):
   def get(self):
     self.post()
   """
@@ -150,14 +151,16 @@ class AccountUsage(webapp.RequestHandler):
       values['months'] = monthsdict
       alldata['usage'].append(values)
     
-    self.response.out.write(simplejson.dumps(alldata))
+    self.response.out.write(json.dumps(alldata))
 
-application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
   ('/accinfo/auth', Authenticate),
   ('/accinfo/usage', AccountUsage)], debug=constants.DEBUG)
 
+"""
 def main():
   run_wsgi_app(application)
 
 if __name__ == '__main__':
   main()
+"""

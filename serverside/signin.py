@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import template
 from serverside.constants import WEB_ADMIN_PARAMS, TEMPLATE_PATHS
 from serverside.entities import memcache_db
@@ -25,7 +25,7 @@ import time
 import uuid
 
 
-class SignIn(webapp.RequestHandler):
+class SignIn(webapp2.RequestHandler):
 
   def post(self):
     """Get the username and password, hash password. Authenticate, make sure account is enabled then redirect to account page. """

@@ -15,11 +15,10 @@
 #
 
 from constants import ACCOUNT_STATUS
-from django.utils import simplejson
 from entities import memcache_db
 from entities.pending_create import Pending_Create
 from google.appengine.api import mail
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.db import NotSavedError
 from google.appengine.ext.webapp import template
 from serverside.dao import accounts_dao, pending_create_dao
@@ -33,9 +32,9 @@ import messages
 import uuid
 
 
-json = simplejson
+import json
 
-class NewsLetterSignUp(webapp.RequestHandler):
+class NewsLetterSignUp(webapp2.RequestHandler):
   def post(self):
     clean = XssCleaner()
     email = self.request.get('email')    
@@ -48,7 +47,7 @@ class NewsLetterSignUp(webapp.RequestHandler):
 
 
 
-class SignUp(webapp.RequestHandler):
+class SignUp(webapp2.RequestHandler):
   """
   get: is used to activate an account.
   post: is used to handle sign up requests coming from web form.

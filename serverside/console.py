@@ -20,7 +20,7 @@ Created on Feb 1, 2011
 
 Console class that will render the user console and provide additional functionality if needed.
 '''
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import template
 from google.appengine.api import mail
 from google.appengine.ext import blobstore 
@@ -45,8 +45,7 @@ import hashlib
 import logging
 import wsgiref.handlers
 import random
-import simplejson
-json = simplejson
+import json
 
 def getErrorString(err):
   if err == "BadImageType":
@@ -61,7 +60,7 @@ def getErrorString(err):
     return "A User ID was not provided, please try again"
   return err
 
-class Console(webapp.RequestHandler):
+class Console(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     """ Render dashboard """
@@ -75,7 +74,7 @@ class Console(webapp.RequestHandler):
                        'api_key': api_key}
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_DASHBOARD, template_values))
 
-class ConsoleUsers(webapp.RequestHandler):
+class ConsoleUsers(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     """ Render users template """
@@ -96,7 +95,7 @@ class ConsoleUsers(webapp.RequestHandler):
                        'error': error}
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_DASHBOARD, template_values))
 
-class ConsoleBadges(webapp.RequestHandler):
+class ConsoleBadges(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     current_session = Session().get_current_session(self)
@@ -117,7 +116,7 @@ class ConsoleBadges(webapp.RequestHandler):
                        'error': error}
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_DASHBOARD, template_values))
 
-class ConsoleEditUser(webapp.RequestHandler):
+class ConsoleEditUser(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     """
@@ -151,7 +150,7 @@ class ConsoleEditUser(webapp.RequestHandler):
                        'has_error':has_error}
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_DASHBOARD, template_values))
 
-class ConsoleUsersFetch(webapp.RequestHandler):
+class ConsoleUsersFetch(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     """ Params page, limit """
@@ -199,7 +198,7 @@ class ConsoleUsersFetch(webapp.RequestHandler):
     self.response.out.write(ret_json)
     
   
-class ConsoleFeatures(webapp.RequestHandler):
+class ConsoleFeatures(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     current_session = Session().get_current_session(self)
@@ -242,7 +241,7 @@ class ConsoleFeatures(webapp.RequestHandler):
                        'notifier': notifier_str}
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_DASHBOARD, template_values))  
 
-class ConsoleFeaturesUpdate(webapp.RequestHandler):
+class ConsoleFeaturesUpdate(webapp2.RequestHandler):
   @account_login_required
   def post(self):
     """ Ajax call handler to save trophycase features """
@@ -258,7 +257,7 @@ class ConsoleFeaturesUpdate(webapp.RequestHandler):
     else:
       self.response.out.write("Failed")
 
-class ConsoleFeaturesPreview(webapp.RequestHandler):
+class ConsoleFeaturesPreview(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     """ Ask for which widget, and then render that widget """
@@ -322,7 +321,7 @@ class ConsoleFeaturesPreview(webapp.RequestHandler):
       badgeset.append(item)
     return badgeset
   
-class ConsoleFeaturesGetValue(webapp.RequestHandler):
+class ConsoleFeaturesGetValue(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     """ Sleep here... on PROD we hare having race condition, try this out... """
@@ -337,7 +336,7 @@ class ConsoleFeaturesGetValue(webapp.RequestHandler):
     self.response.out.write(value)
     
 
-class ConsoleAnalytics(webapp.RequestHandler):
+class ConsoleAnalytics(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     current_session = Session().get_current_session(self)
@@ -345,7 +344,7 @@ class ConsoleAnalytics(webapp.RequestHandler):
                        'account_name' : current_session.get_email()}
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_DASHBOARD, template_values))
 
-class ConsoleDownloads(webapp.RequestHandler):
+class ConsoleDownloads(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     current_session = Session().get_current_session(self)
@@ -353,7 +352,7 @@ class ConsoleDownloads(webapp.RequestHandler):
                        'account_name' : current_session.get_email()}
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_DASHBOARD, template_values))
     
-class ConsolePreferences(webapp.RequestHandler):
+class ConsolePreferences(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     """ handler for change password template """
@@ -392,7 +391,7 @@ class ConsolePreferences(webapp.RequestHandler):
                        "password_changed" : success}
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_DASHBOARD, template_values))
 
-class ConsoleForgottenPassword(webapp.RequestHandler):
+class ConsoleForgottenPassword(webapp2.RequestHandler):
   def get(self):
     """ handle forgotten password request """
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_FORGOTTEN_PASSWORD, None))
@@ -422,11 +421,11 @@ class ConsoleForgottenPassword(webapp.RequestHandler):
               "response" : True}
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_FORGOTTEN_PASSWORD, values))
     
-class ConsoleSignUp(webapp.RequestHandler):
+class ConsoleSignUp(webapp2.RequestHandler):
   def get(self):
     self.response.out.write(template.render(constants.TEMPLATE_PATHS.CONSOLE_SIGN_UP, None))
     
-class ConsoleNotifierPreview(webapp.RequestHandler):
+class ConsoleNotifierPreview(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     current_session = Session().get_current_session(self)
@@ -441,7 +440,7 @@ class ConsoleNotifierPreview(webapp.RequestHandler):
     notifier.user_badge_award(user_ref, "Preview Message", "/images/badges/test2.png", "Sample Title", account_entity, "anonymous_badge")
     self.response.out.write("done")
 
-class ConsoleNewNotifierToken(webapp.RequestHandler):
+class ConsoleNewNotifierToken(webapp2.RequestHandler):
   @account_login_required
   def get(self):
     current_session = Session().get_current_session(self)
@@ -458,12 +457,12 @@ class ConsoleNewNotifierToken(webapp.RequestHandler):
     notifier_str = "<div style='z-index:9999; overflow: hidden; position: fixed; bottom: 0px; right: 10px;'><iframe style='border:none;' allowtransparency='true' height='"+str(constants.NOTIFIER_SIZE_DEFAULT)+"px' width='"+str(constants.NOTIFIER_SIZE_DEFAULT)+"px' scrolling='no' src='" + widget_path + "?widget=" + widget_type + "&u=" + userhash + "&height=" +str(constants.NOTIFIER_SIZE_DEFAULT) + "&width="+str(constants.NOTIFIER_SIZE_DEFAULT)+"'>Sorry your browser does not support iframes!</iframe></div>"
     self.response.out.write(notifier_str)
 
-class ReturnUserCount(webapp.RequestHandler):
+class ReturnUserCount(webapp2.RequestHandler):
   def get(self):
     # TODO
     self.response.out.write("800")
 
-class DeleteUser(webapp.RequestHandler):
+class DeleteUser(webapp2.RequestHandler):
   @account_login_required
   def post(self):
     current_session = Session().get_current_session(self)
@@ -483,7 +482,7 @@ class DeleteUser(webapp.RequestHandler):
     users_dao.delete_user(user_hash)
     self.response.out.write(json_ret)
 
-class DeleteBadge(webapp.RequestHandler):
+class DeleteBadge(webapp2.RequestHandler):
   @account_login_required
   def post(self):
     current_session = Session().get_current_session(self)
@@ -501,7 +500,7 @@ class DeleteBadge(webapp.RequestHandler):
                 'reason':'Unable to remove badge' + str(e)}
     self.response.out.write(json_ret)
 
-class AddUser(webapp.RequestHandler):
+class AddUser(webapp2.RequestHandler):
   @account_login_required
   def post(self):
     current_session = Session().get_current_session(self)
@@ -526,7 +525,7 @@ class AddUser(webapp.RequestHandler):
     users_dao.save_user(new_user, user_key)
     self.redirect('/adminconsole/users')
 
-class AwardUser(webapp.RequestHandler):
+class AwardUser(webapp2.RequestHandler):
   @account_login_required
   def post(self):
     current_session = Session().get_current_session(self)
@@ -575,7 +574,7 @@ class AwardUser(webapp.RequestHandler):
     self.redirect('/adminconsole/users/edit?name=' + user_id)
 
 
-application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
   ('/adminconsole', Console),
   ('/adminconsole/users', ConsoleUsers),
   ('/adminconsole/users/edit', ConsoleEditUser),
@@ -599,10 +598,11 @@ application = webapp.WSGIApplication([
   ('/adminconsole/newnotifytoken', ConsoleNewNotifierToken)
 ], debug=constants.DEBUG)
 
-
+"""
 def main():
   wsgiref.handlers.CGIHandler().run(application)
 
 
 if __name__ == '__main__':
   main()
+"""
