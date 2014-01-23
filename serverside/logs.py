@@ -19,7 +19,6 @@ import os
 import wsgiref.handlers
 import urllib
 import webapp2
-#from google.appengine.ext.webapp2.util import run_wsgi_app
 from google.appengine.api import urlfetch
 from serverside import constants
 from serverside import environment

@@ -18,14 +18,11 @@
 
 import wsgiref.handlers
 import cgi
-#from django.utils import simplejson
-#import simplesjon
 import webapp2
 from google.appengine.ext import db
 from entities.users import *
 from tools.xss import XssCleaner
 import json
-#json = simplejson
 
 class AccountInfo(webapp2.RequestHandler):
   def get(self):

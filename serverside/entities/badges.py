@@ -27,7 +27,6 @@ from users import Users
 
 from google.appengine.ext import db
 from google.appengine.ext.blobstore import blobstore
-#from django.utils import simplejson  
 
 import json
 BOOLEAN = ["yes", "no"]

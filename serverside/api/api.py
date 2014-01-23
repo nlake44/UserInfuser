@@ -49,10 +49,8 @@ from google.appengine.api import channel
 from google.appengine.api import files
 from google.appengine.ext import blobstore
 from serverside import constants 
-from django.utils import simplejson
-json = simplejson
 from serverside.tools.xss import XssCleaner
-
+import json
 
 import hashlib
 import time

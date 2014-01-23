@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-#from google.appengine.ext import webapp2
 from serverside.session import Session
 import webapp2
 class LogOut(webapp2.RequestHandler):

@@ -20,7 +20,8 @@ Copyright 2010 VendAsta Technologies Inc.
 import time
 import logging
 import json
-from google.appengine.ext import deferred, webapp2, db
+import webapp2
+from google.appengine.ext import deferred, db
 from google.appengine.api.capabilities import CapabilitySet
 from fantasm import config, constants
 from fantasm.fsm import FSM
