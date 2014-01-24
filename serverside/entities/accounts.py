@@ -19,8 +19,7 @@ import datetime
 
 from google.appengine.ext import db
 
-from django.utils import simplejson
-
+import json
 from serverside.constants import *
 from serverside.entities.widgets import TrophyCase
 from serverside.entities.widgets import Points
@@ -28,7 +27,6 @@ from serverside.entities.widgets import Rank
 from serverside.entities.widgets import Milestones
 from serverside.entities.widgets import Leaderboard
 from serverside.entities.widgets import Notifier
-json = simplejson
 
 """
 Class: 

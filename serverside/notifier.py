@@ -14,7 +14,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 from google.appengine.api import channel
-from django.utils import simplejson
 from entities.accounts import Accounts
 from entities.badges import *
 from entities.users import *
@@ -28,7 +27,7 @@ from serverside.dao import accounts_dao
 
 import logging
 import os
-json = simplejson
+import json
 
 def get_channel_token(user_ref):
   if not user_ref:

@@ -28,17 +28,17 @@ This module should be specified as a handler for fantasm URLs in app.yaml:
     script: fantasm/main.py
 """
 
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import util
+from google.appengine.ext import webapp2
+from google.appengine.ext.webapp2 import util
 from fantasm import handlers, console
 
 def createApplication():
     """Create new WSGIApplication and register all handlers.
 
     Returns:
-        an instance of webapp.WSGIApplication with all fantasm handlers registered.
+        an instance of webapp2.WSGIApplication with all fantasm handlers registered.
     """
-    return webapp.WSGIApplication([
+    return webapp2.WSGIApplication([
         (r"^/[^\/]+/fsm/.+",       handlers.FSMHandler),
         (r"^/[^\/]+/cleanup/",     handlers.FSMFanInCleanupHandler),
         (r"^/[^\/]+/graphviz/.+",  handlers.FSMGraphvizHandler),
@@ -49,6 +49,7 @@ def createApplication():
 
 APP = createApplication()
 
+"""
 def main():
     """ Main entry point. """
     import os
@@ -59,3 +60,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+"""

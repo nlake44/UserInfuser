@@ -13,10 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from google.appengine.ext import webapp
 from serverside.session import Session
-
-class LogOut(webapp.RequestHandler):
+import webapp2
+class LogOut(webapp2.RequestHandler):
   def get(self):
     sess = Session().get_current_session(self)
     if(sess != None):

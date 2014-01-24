@@ -12,11 +12,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-try:
-  import json
-except:
-  from django.utils import simplejson
-  json = simplejson
+import json
 import os 
 import hashlib
 import ui_constants

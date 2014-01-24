@@ -29,23 +29,22 @@ from serverside.badge import SeeTheme
 from serverside.analytics import GetAnalytics
 from serverside.analytics import RunAnalytics
 from serverside import constants
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
+import webapp2
 from google.appengine.ext import db
 from google.appengine.api import users
 import logging
 import os
 from serverside.analytics import *
 
-class IndexPage(webapp.RequestHandler):
+class IndexPage(webapp2.RequestHandler):
   def get(self):
     self.redirect('/html/signup.html')
 
-class HelloWorld(webapp.RequestHandler):
+class HelloWorld(webapp2.RequestHandler):
   def get(self):
     self.response.out.write("hi!")
 
-application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
   ('/', IndexPage),
   ('/account', Accounts),
   ('/login', SignIn),
@@ -60,8 +59,10 @@ application = webapp.WSGIApplication([
   ('/getanalytics', GetAnalytics),
 ], debug=constants.DEBUG)
 
+"""
 def main():
   run_wsgi_app(application)
 
 if __name__ == '__main__':
   main()
+"""

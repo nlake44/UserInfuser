@@ -15,21 +15,22 @@
 #
 import wsgiref.handlers
 import cgi
-from google.appengine.ext import webapp
+import webapp2
 import logging
 from serverside import constants
-class NotFound(webapp.RequestHandler):
+class NotFound(webapp2.RequestHandler):
   def get(self):
     self.redirect('/html/404.html')
 
-application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
   ('/.*', NotFound),
 ], debug=constants.DEBUG)
 
-
+"""
 def main():
   wsgiref.handlers.CGIHandler().run(application)
 
 
 if __name__ == '__main__':
   main()
+"""

@@ -1,8 +1,0 @@
-<html>
-	<body bgcolor="#eeeeee">
-		<h3>Analytics Help</h3>
-		<hr/> 
-    <h4>"No Data Available"</h4>
-		<p>Don't see data? You'll have to use it for a few days before the graphs look useful. It takes two points to make a line and a new point is placed daily (granted that its not zero).</p>
-	</body>
-</html>

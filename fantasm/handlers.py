@@ -19,8 +19,8 @@ Copyright 2010 VendAsta Technologies Inc.
 
 import time
 import logging
-import simplejson
-from google.appengine.ext import deferred, webapp, db
+import json
+from google.appengine.ext import deferred, webapp2, db
 from google.appengine.api.capabilities import CapabilitySet
 from fantasm import config, constants
 from fantasm.fsm import FSM
@@ -80,20 +80,20 @@ def getMachineConfig(request):
     except KeyError:
         raise UnknownMachineError(machineName)
 
-class FSMLogHandler(webapp.RequestHandler):
+class FSMLogHandler(webapp2.RequestHandler):
     """ The handler used for logging """
     def post(self):
         """ Runs the serialized function """
         deferred.run(self.request.body)
         
-class FSMFanInCleanupHandler(webapp.RequestHandler):
+class FSMFanInCleanupHandler(webapp2.RequestHandler):
     """ The handler used for logging """
     def post(self):
         """ Runs the serialized function """
         q = _FantasmFanIn.all().filter('workIndex =', self.request.POST[constants.WORK_INDEX_PARAM])
         db.delete(q)
 
-class FSMGraphvizHandler(webapp.RequestHandler):
+class FSMGraphvizHandler(webapp2.RequestHandler):
     """ The hander to output graphviz diagram of the finite state machine. """
     def get(self):
         """ Handles the GET request. """
@@ -131,7 +131,7 @@ def getCurrentFSM():
     _fsm = FSM(currentConfig=currentConfig)
     return _fsm
     
-class FSMHandler(webapp.RequestHandler):
+class FSMHandler(webapp2.RequestHandler):
     """ The main worker handler, used to process queued machine events. """
 
     def get(self):
@@ -292,4 +292,4 @@ class FSMHandler(webapp.RequestHandler):
                 'obj' : obj,
                 'context': fsm,
             }
-            self.response.out.write(simplejson.dumps(data, cls=Encoder))
+            self.response.out.write(json.dumps(data, cls=Encoder))

@@ -41,7 +41,7 @@ from serverside.dao import widgets_dao
 from serverside import environment
 from serverside import notifier
 from serverside import logs
-from google.appengine.ext import webapp
+from google.appengine.ext import webapp2
 from google.appengine.ext import db
 from google.appengine.api import urlfetch
 from google.appengine.ext.webapp import template
@@ -49,10 +49,8 @@ from google.appengine.api import channel
 from google.appengine.api import files
 from google.appengine.ext import blobstore
 from serverside import constants 
-from django.utils import simplejson
-json = simplejson
 from serverside.tools.xss import XssCleaner
-
+import json
 
 import hashlib
 import time
@@ -201,7 +199,7 @@ def user_error():
   return ret
 
 
-class API_1_Status(webapp.RequestHandler):
+class API_1_Status(webapp2.RequestHandler):
   def post(self):
     start = time.time()
     self.response.out.write(success_ret())
@@ -211,7 +209,7 @@ class API_1_Status(webapp.RequestHandler):
     self.response.out.write(success_ret())
     timing(start) 
 
-class API_1_GetUserData(webapp.RequestHandler):
+class API_1_GetUserData(webapp2.RequestHandler):
   def post(self):
     start = time.time()
     api_key = self.request.get('apikey')
@@ -280,7 +278,7 @@ class API_1_GetUserData(webapp.RequestHandler):
     self.response.out.write(json.dumps(ret)) 
     timing(start) 
 
-class API_1_UpdateUser(webapp.RequestHandler):
+class API_1_UpdateUser(webapp2.RequestHandler):
   def post(self):
     start = time.time()
     clean = XssCleaner()
@@ -389,7 +387,7 @@ class API_1_UpdateUser(webapp.RequestHandler):
     self.redirect('/html/404.html')
     return 
 
-class API_1_AwardBadgePoints(webapp.RequestHandler):
+class API_1_AwardBadgePoints(webapp2.RequestHandler):
   def post(self):
     start = time.time()
 
@@ -530,7 +528,7 @@ class API_1_AwardBadgePoints(webapp.RequestHandler):
     self.redirect('/html/404.html')
 
 
-class API_1_AwardBadge(webapp.RequestHandler):
+class API_1_AwardBadge(webapp2.RequestHandler):
   def post(self):
     start = time.time()
     api_key = self.request.get('apikey')
@@ -625,7 +623,7 @@ class API_1_AwardBadge(webapp.RequestHandler):
   def get(self):
     self.redirect('/html/404.html')
 
-class API_1_RemoveBadge(webapp.RequestHandler):
+class API_1_RemoveBadge(webapp2.RequestHandler):
   def post(self):
     start = time.time()
     api_key = self.request.get('apikey')
@@ -701,7 +699,7 @@ class API_1_RemoveBadge(webapp.RequestHandler):
     self.redirect('/html/404.html')
 
 
-class API_1_GetWidget(webapp.RequestHandler):
+class API_1_GetWidget(webapp2.RequestHandler):
   def post(self):
     """This post is for priming/prefetching, 
        not actually delivering the widget
@@ -1073,7 +1071,7 @@ class API_1_GetWidget(webapp.RequestHandler):
     
     return ret
 
-class API_1_AwardPoints(webapp.RequestHandler):
+class API_1_AwardPoints(webapp2.RequestHandler):
   def post(self):
     start = time.time()
     api_key = self.request.get('apikey')
@@ -1151,7 +1149,7 @@ class API_1_AwardPoints(webapp.RequestHandler):
     self.redirect('/html/404.html')
     return 
 
-class API_1_TestCleanup(webapp.RequestHandler):
+class API_1_TestCleanup(webapp2.RequestHandler):
   def post(self):
     isLocal = os.environ['SERVER_SOFTWARE'].startswith('Dev')
     if not isLocal:
@@ -1216,7 +1214,7 @@ class API_1_TestCleanup(webapp.RequestHandler):
 
 # Secret only valid for local testing
 TOPSECRET = "8u8u9i9i"
-class API_1_Test(webapp.RequestHandler):
+class API_1_Test(webapp2.RequestHandler):
   def post(self):
     isLocal = os.environ['SERVER_SOFTWARE'].startswith('Dev')
     if not isLocal:
@@ -1295,7 +1293,7 @@ class API_1_Test(webapp.RequestHandler):
     return  
 
 # Hidden menu APIs, badges should be created via console
-class API_1_CreateBadge(webapp.RequestHandler):
+class API_1_CreateBadge(webapp2.RequestHandler):
   def post(self):
     start = time.time()
     api_key = self.request.get('apikey')
@@ -1368,7 +1366,7 @@ class API_1_CreateBadge(webapp.RequestHandler):
     return        
  
 
-application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
   ('/api/1/', API_1_Status),
   ('/api/1/updateuser', API_1_UpdateUser),
   ('/api/1/getuserdata', API_1_GetUserData),
@@ -1383,8 +1381,10 @@ application = webapp.WSGIApplication([
   ('/api/1/createbadge', API_1_CreateBadge)
 ], debug=False)
 
+"""
 def main():
   wsgiref.handlers.CGIHandler().run(application)
 
 if __name__ == '__main__':
   main()
+"""

@@ -1,8 +1,0 @@
-<html>
-	<body bgcolor="#eeeeee">
-		<h3>Downloads Help</h3>
-		<hr/>
-		<p>Don't see your language of choice here? Tell us. You can also implement it via REST.</p>
-    <p>API documentation can be found <a href="http://code.google.com/p/userinfuser/wiki/API_Documentation" target="_blank">here</a>.
-	</body>
-</html>

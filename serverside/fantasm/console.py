@@ -1,9 +1,9 @@
 """ Views for the console. """
 
-from google.appengine.ext import webapp
+from google.appengine.ext import webapp2
 from fantasm import config
 
-class Dashboard(webapp.RequestHandler):
+class Dashboard(webapp2.RequestHandler):
     """ The main dashboard. """
     
     def get(self):
