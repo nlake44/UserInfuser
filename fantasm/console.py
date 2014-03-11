@@ -1,6 +1,5 @@
 """ Views for the console. """
-
-from google.appengine.ext import webapp2
+import webap2
 from fantasm import config
 
 class Dashboard(webapp2.RequestHandler):
