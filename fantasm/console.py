@@ -1,5 +1,5 @@
 """ Views for the console. """
-import webap2
+import webapp2
 from fantasm import config
 
 class Dashboard(webapp2.RequestHandler):
