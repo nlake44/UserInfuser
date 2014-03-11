@@ -15,7 +15,6 @@
 #
 from google.appengine.api import users
 from google.appengine.ext import db
-from google.appengine.ext.webapp2.util import run_wsgi_app
 from serverside import constants
 from serverside.dao import accounts_dao
 from serverside.entities.counter import APICountBatch
@@ -157,10 +156,3 @@ app = webapp2.WSGIApplication([
   ('/accinfo/auth', Authenticate),
   ('/accinfo/usage', AccountUsage)], debug=constants.DEBUG)
 
-"""
-def main():
-  run_wsgi_app(application)
-
-if __name__ == '__main__':
-  main()
-"""

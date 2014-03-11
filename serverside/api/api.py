@@ -22,6 +22,7 @@ import os
 import wsgiref.handlers
 import cgi
 import locale
+import webapp2
 from serverside.entities.users import Users
 from serverside.entities.accounts import Accounts
 from serverside.entities.badges import Badges
@@ -41,7 +42,6 @@ from serverside.dao import widgets_dao
 from serverside import environment
 from serverside import notifier
 from serverside import logs
-from google.appengine.ext import webapp2
 from google.appengine.ext import db
 from google.appengine.api import urlfetch
 from google.appengine.ext.webapp import template

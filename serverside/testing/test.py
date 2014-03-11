@@ -16,8 +16,9 @@
 """ All paths here run unit tests
 """
 
+import webapp2
 from google.appengine.api import mail, memcache
-from google.appengine.ext import db, webapp2
+from google.appengine.ext import db
 from google.appengine.ext.db import *
 from serverside import constants
 from serverside.entities import memcache_db
@@ -630,11 +631,3 @@ app = webapp2.WSGIApplication([
   ('/test/pendingcreates', TestPendingCreates)
 ], debug=True)
 
-"""
-def main():
-  wsgiref.handlers.CGIHandler().run(application)
-
-
-if __name__ == '__main__':
-  main()
-"""

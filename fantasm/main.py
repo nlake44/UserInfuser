@@ -27,9 +27,7 @@ This module should be specified as a handler for fantasm URLs in app.yaml:
     login: admin
     script: fantasm/main.py
 """
-
-from google.appengine.ext import webapp2
-from google.appengine.ext.webapp2 import util
+import webapp2
 from fantasm import handlers, console
 
 def createApplication():
@@ -49,15 +47,4 @@ def createApplication():
 
 APP = createApplication()
 
-"""
-def main():
-    "Main entry point."
-    import os
-    if os.environ.get('SERVER_SOFTWARE') == 'Development/1.0':
-        # this seems to be a dev_appserver.py bug. causes unicode errors when trying to process the request
-        os.environ['QUERY_STRING'] = str(os.environ['QUERY_STRING'])
-    util.run_wsgi_app(APP)
 
-if __name__ == "__main__":
-    main()
-"""

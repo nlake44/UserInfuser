@@ -16,11 +16,11 @@ Copyright 2010 VendAsta Technologies Inc.
    See the License for the specific language governing permissions and
    limitations under the License.
 """
-
+import webapp2
 import time
 import logging
 import json
-from google.appengine.ext import deferred, webapp2, db
+from google.appengine.ext import deferred, db
 from google.appengine.api.capabilities import CapabilitySet
 from fantasm import config, constants
 from fantasm.fsm import FSM

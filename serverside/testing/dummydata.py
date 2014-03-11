@@ -18,7 +18,7 @@ Created on Feb 24, 2011
 
 @author: shan
 '''
-from google.appengine.ext import webapp2
+import webapp2
 
 from serverside.dao import accounts_dao
 from serverside.dao import users_dao
